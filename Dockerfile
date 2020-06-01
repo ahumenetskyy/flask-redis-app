@@ -11,5 +11,7 @@ RUN pip install -r requirements.txt
 # add app
 COPY . /usr/src/app
 
+EXPOSE 5000
+
 # run server
 CMD python app.py

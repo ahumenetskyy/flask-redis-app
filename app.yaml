@@ -19,10 +19,10 @@ spec:
         - containerPort: 5000
           name: http
         env:
-        - name: GET_HOSTS_FROM
-          value: env
+        # - name: GET_HOSTS_FROM
+          # value: env
         - name: REDIS_HOST
-          value: redis-service
+          value: 'redis-service'
         - name: REDIS_PORT
           value: '6379'
 ---
