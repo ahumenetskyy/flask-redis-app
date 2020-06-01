@@ -1,0 +1,41 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: flask-redis-app-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flask-redis-app
+  template:
+    metadata:
+      labels:
+        app: flask-redis-app
+    spec:
+      containers:
+      - name: flask-redis-app-container
+        image: ahumenetskyy/flask_redis_app:latest
+        ports:
+        - containerPort: 5000
+          name: http
+        env:
+        - name: GET_HOSTS_FROM
+          value: env
+        - name: REDIS_HOST
+          value: redis-service
+        - name: REDIS_PORT
+          value: '6379'
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: flask-redis-app-service
+spec:
+  selector:
+    app: flask-redis-app
+  ports:
+  - protocol: TCP
+    targetPort: 5000
+    port: 80
+    name: http
+  type: LoadBalancer
